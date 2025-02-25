@@ -8,7 +8,7 @@
 </head>
 <body>
     <main class="container">
-        <h1 class="title is-1">Personajes</h1>
+        <h1 class="title is-1"><a href="index.html">Dragon Ball</a></h1>
         <div class="content">
             <section class="container">
                 <h2 class="title is-2">Todos los personajes</h2>            
@@ -28,28 +28,28 @@
                         </figure>
                     </div>
                         <div class="card-content">
-                        <h4 class="title is-4"><a href="#" id="${elemento.id}">${elemento.name}</a></h3>
+                        <h4 class="title is-4"><a href="personaje.html?id=${elemento.id}" id="${elemento.id}">${elemento.name}</a></h3>
                     </div>
                 </div>     
                 `;
     }
 
-    function createModal(elemento) {
-        return `
-            <div id="characterModal" class="modal">
-                <div class="modal-background"></div>
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">${elemento.name}</p>
-                        <button class="delete" id="closeModal"></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <div id="characterDetails">${elemento.description}</div>
-                    </section>
-                </div>
-            </div>
-        `;
-    }
+    // function createModal(elemento) {
+    //     return `
+    //         <div id="characterModal" class="modal">
+    //             <div class="modal-background"></div>
+    //             <div class="modal-card">
+    //                 <header class="modal-card-head">
+    //                     <p class="modal-card-title">${elemento.name}</p>
+    //                     <button class="delete" id="closeModal"></button>
+    //                 </header>
+    //                 <section class="modal-card-body">
+    //                     <div id="characterDetails">${elemento.description}</div>
+    //                 </section>
+    //             </div>
+    //         </div>
+    //     `;
+    // }
 
     async function mostrarPersonajes() {
         const personajesData = await getCharacters();

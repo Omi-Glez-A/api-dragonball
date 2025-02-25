@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personaje</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <h1 class="title is-1"><a href="index.html">Dragon Ball</a></h1>
+        <div class="content" id="personaje">            
+        </div>
+    </main>
+    <script>
+
+    const divCharacter = document.getElementById("personaje");
+
+    // obtener id del personaje desde la url
+    function getIdPersonaje() {
+        const parametro = new URLSearchParams(window.location.search);
+        const id = parametro.get('id');
+        console.log("id personaje ",id);
+        return id;
+    }
+
+    // obtener el personaje
+    async function getCharacter(idPersonaje) {
+        try {
+            const response = await fetch(`https://dragonball-api.com/api/characters/${idPersonaje}`);
+            const data = await response.json();
+            console.log(data);
+            return data;
+          } catch (error) {
+            console.error("Ha habido un error! ", error);
+            return null;
+          }      
+    }
+
+
+    // crear la "mega-card"
+    function crearCard(personaje) {
+        divCharacter.innerHTML =` 
+            <div id="info-personaje">
+                <div class="card-header">
+                    <h2 class="title is-2">${personaje.name}</h2>
+                </div>
+                <div class="card-personaje">
+                    <figure class="image">
+                        <img src="${personaje.image}" alt="${personaje.name}">
+                    </figure>                    
+                    <div class="content">
+                        <p>${personaje.description}</p>
+                        <p><strong>Planeta de origen:</strong> ${personaje.originPlanet.name}</p>
+                    </div>
+                </div>
+            </div>     
+                `;
+    }
+
+   
+    async function mostrarPersonaje() {
+        const personajeId = getIdPersonaje();
+        if (personajeId) {
+            try {
+                const personajesData = await getCharacter(personajeId);
+                crearCard(personajesData);                 
+            } catch (error) {
+                divCharacter.innerHTML = `
+                    <article class="message is-danger">
+                        <div class="message-header">
+                            <p>Error!!!</p>
+                            <button class="delete" aria-label="delete"></button>
+                        </div>
+                        <div class="message-body">
+                          Algo ha ido mal: ${error.message}
+                        </div>
+                    </article>
+                `;
+            }
+        } else {
+            divCharacter.innerHTML = `
+                    <article class="message is-warning">
+                        <div class="message-header">
+                            <p>Vaya...</p>
+                            <button class="delete" aria-label="delete"></button>
+                        </div>
+                        <div class="message-body">
+                          No has especificado ningún personaje...
+                        </div>
+                    </article>
+                `;
+        }
+    }
+
+    mostrarPersonaje();   
+
+    </script>  
+</body>
+</html>
