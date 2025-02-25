@@ -34,6 +34,23 @@
                 `;
     }
 
+    function createModal(elemento) {
+        return `
+            <div id="characterModal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">${elemento.name}</p>
+                        <button class="delete" id="closeModal"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <div id="characterDetails">${elemento.description}</div>
+                    </section>
+                </div>
+            </div>
+        `;
+    }
+
     async function mostrarPersonajes() {
         const personajesData = await getCharacters();
         console.log(personajesData.items);
@@ -56,6 +73,10 @@
     }
 
     mostrarPersonajes();
+
+
+
+    
 
     </script>  
 </body>
