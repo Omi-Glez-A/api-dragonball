@@ -63,8 +63,8 @@
         const personajeId = getIdPersonaje();
         if (personajeId) {
             try {
-                const personajesData = await getCharacter(personajeId);
-                crearCard(personajesData);                 
+                const personajeData = await getCharacter(personajeId);
+                crearCard(personajeData);                 
             } catch (error) {
                 divCharacter.innerHTML = `
                     <article class="message is-danger">

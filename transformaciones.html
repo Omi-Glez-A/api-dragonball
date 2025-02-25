@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personajes</title>
+    <title>Transformaciones</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,14 +11,14 @@
         <h1 class="title is-1"><a href="index.html">Dragon Ball</a></h1>
         <div class="content">
             <section class="container">
-                <h2 class="title is-2">Todos los personajes</h2>            
-                <div class="cards" id="all-personajes"></div>
+                <h2 class="title is-2">Transformaciones</h2>            
+                <div class="cards" id="all-transformation"></div>
             </section>
         </div>
     </main>
     <script>
-    const divCharacters = document.getElementById("all-personajes");
-    let allCharacters = [];
+    const divAllTransform = document.getElementById("all-transformation");
+    let allTransformation = [];
 
     function crearCard(elemento) {
         return ` <div class="card">
@@ -28,26 +28,27 @@
                         </figure>
                     </div>
                         <div class="card-content">
-                        <h4 class="title is-4"><a href="personaje.html?id=${elemento.id}" id="${elemento.id}">${elemento.name}</a></h3>
+                        <h4 class="title is-4"><a href="transformacion.html?id=${elemento.id}" id="${elemento.id}">${elemento.name}</a></h4>
                     </div>
                 </div>     
                 `;
     }
 
-    async function mostrarPersonajes() {
-        const personajesData = await getCharacters();
-        console.log(personajesData.items);
-        allCharacters = personajesData.items;
-        console.log(allCharacters.length);
-        allCharacters.forEach(character => {
-            divCharacters.innerHTML += crearCard(character);        
+    async function mostrarTransformations() {
+        const transformationsData = await getTransformations();
+        console.log(transformationsData);
+        // al loro que el json de transformations no tiene items... es directacmente sin items :)
+        allTransformation = transformationsData;
+        console.log(allTransformation.length);
+        allTransformation.forEach(transformation => {
+            divAllTransform.innerHTML += crearCard(transformation);        
         });
     }
 
-    async function getCharacters() {
+    async function getTransformations() {
         try {
-            const response = await fetch("https://dragonball-api.com/api/characters?limit=50");
-            console.log("hola");
+            const response = await fetch("https://dragonball-api.com/api/transformations");
+            console.log("hola transformaciones");
             return await response.json();
           } catch (error) {
             console.error("Ha habido un error! ", error);
@@ -55,11 +56,7 @@
           }      
     }
 
-    mostrarPersonajes();
-
-
-
-    
+    mostrarTransformations();    
 
     </script>  
 </body>

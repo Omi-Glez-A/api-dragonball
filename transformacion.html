@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planeta</title>
+    <title>Transformación</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="container">
         <h1 class="title is-1"><a href="index.html">Dragon Ball</a></h1>
-        <div class="content" id="planeta">            
+        <div class="content" id="transformacion">            
         </div>
     </main>
     <script>
 
-    const divPlaneta = document.getElementById("planeta");
+    const divTransformacion = document.getElementById("transformacion");
 
-    // obtener id del planeta desde la url
-    function getIdPlaneta() {
+    // obtener id del personaje desde la url
+    function getIdTransformacion() {
         const parametro = new URLSearchParams(window.location.search);
         const id = parametro.get('id');
+        console.log("id transformacion ",id);
         return id;
     }
 
-    // obtener planeta
-    async function getPlaneta(idPlaneta) {
+    // obtener el personaje
+    async function getTransformacion(idTransformacion) {
         try {
-            const response = await fetch(`https://dragonball-api.com/api/planets/${idPlaneta}`);
+            const response = await fetch(`https://dragonball-api.com/api/transformations/${idTransformacion}`);
             const data = await response.json();
             console.log(data);
             return data;
@@ -38,19 +39,18 @@
 
 
     // crear la "mega-card"
-    function crearCard(planeta) {
-        divPlaneta.innerHTML =` 
-            <div id="info-planeta">
+    function crearCard(transformacion) {
+        divTransformacion.innerHTML =` 
+            <div id="info-personaje">
                 <div class="card-header">
-                    <h2 class="title is-2">${planeta.name}</h2>
+                    <h2 class="title is-2">${transformacion.name}</h2>
                 </div>
                 <div class="card-personaje">
                     <figure class="image">
-                        <img src="${planeta.image}" alt="${planeta.name}">
+                        <img src="${transformacion.image}" alt="${transformacion.name}">
                     </figure>                    
                     <div class="content">
-                        <p>${planeta.description}</p>
-                        <p><strong>Cantidad de personajes originarios de este planeta: </strong>${planeta.characters.length}</p>
+                        <p><strong>Ki: </strong>${transformacion.ki}</p>
                     </div>
                 </div>
             </div>     
@@ -58,14 +58,14 @@
     }
 
    
-    async function mostrarPlaneta() {
-        const planetaId = getIdPlaneta();
-        if (planetaId) {
+    async function mostrarTransformacion() {
+        const transformacionId = getIdTransformacion();
+        if (transformacionId) {
             try {
-                const planetaData = await getPlaneta(planetaId);
-                crearCard(planetaData);                 
+                const transformacionData = await getTransformacion(transformacionId);
+                crearCard(transformacionData);                 
             } catch (error) {
-                divPlaneta.innerHTML = `
+                divTransformacion.innerHTML = `
                     <article class="message is-danger">
                         <div class="message-header">
                             <p>Error!!!</p>
@@ -78,21 +78,21 @@
                 `;
             }
         } else {
-            divPlaneta.innerHTML = `
+            divTransformacion.innerHTML = `
                     <article class="message is-warning">
                         <div class="message-header">
                             <p>Vaya...</p>
                             <button class="delete" aria-label="delete"></button>
                         </div>
                         <div class="message-body">
-                          No has especificado ningún planeta...
+                          No has especificado ningún personaje...
                         </div>
                     </article>
                 `;
         }
     }
 
-    mostrarPlaneta();   
+    mostrarTransformacion();   
 
     </script>  
 </body>
