@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planetas Destruidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <h1 class="title is-1">Planetas Destruidos</h1>
+        <div class="content">
+            <section class="container">
+                <h2 class="title is-2">Todos los planetas destruidos</h2>            
+                <div class="cards" id="filtered-planets"></div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+
+    const divFilteredPlanets = document.getElementById("filtered-planets");
+    let filteredPlanets = [];
+
+    function crearCard(elemento) {
+        return ` <div class="card">
+            <div class="card-image">
+                <figure class="image">
+                    <img src="${elemento.image}" alt="${elemento.name}">
+                </figure>
+            </div>
+            <div class="card-content">
+                <h4 class="title is-4"><a href="#" id="${elemento.id}">${elemento.name}</a></h3>
+            </div>
+        </div>     
+        `;
+    }
+
+    async function mostrarPlanetasFiltrados() {
+        const filteredPlanetsData = await getPlanetsFiltrados();
+        console.log(filteredPlanetsData);
+        filteredPlanets = filteredPlanetsData;
+        console.log(filteredPlanets.length);
+        filteredPlanets.forEach(destruido => {
+            divFilteredPlanets.innerHTML += crearCard(destruido);        
+        });
+    }
+
+    async function getPlanetsFiltrados() {
+        try {
+            const response = await fetch("https://dragonball-api.com/api/planets?isDestroyed=true");
+            console.log("planetas destruidos");
+            return await response.json();
+        } catch (error) {
+            console.error("Ha habido un error! ", error);
+            return null;
+        }
+    }
+
+
+    mostrarPlanetasFiltrados();
+
+    </script>
+</body>
+</html>
